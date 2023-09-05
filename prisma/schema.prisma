@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Serie {
+  id                Int                 @id @default(autoincrement()) @db.Int
+  title             String              @unique @db.VarChar(255)
+  description       String              @db.Text
+  seasonAmount      Int                 @map("season_amount")
+  source            String              @db.VarChar(100)
+  poster            String
+  wiki              String              @db.VarChar(255)
+  startDate         DateTime            @map("start_date") @db.Date
+  endDate           DateTime?           @map("end_date") @db.Date
+  status            String              @db.VarChar(100)
+  episode           Episode[]
+  rating            String              @db.VarChar(20)
+  tags              Tag[]
+  seasons           Season[]
+  alternativeTitles AlternativeTitles[]
+}
+
+model AlternativeTitles {
+  lang    String @db.VarChar(2)
+  title   String @db.VarChar(255)
+  serie   Serie  @relation(fields: [serieId], references: [id])
+  serieId Int    @map("serie_id")
+
+  @@id([lang, title, serieId])
+}
+
+model Season {
+  id      Int       @id @default(autoincrement())
+  name    String
+  season  Int
+  serie   Serie     @relation(fields: [serieId], references: [id])
+  serieId Int       @map("serie_id")
+  episodes Episode[]
+}
+
+model Tag {
+  name   String  @id
+  series Serie[]
+}
+
+model Episode {
+  id            Int      @id @default(autoincrement())
+  title         String   @db.VarChar(200)
+  description   String   @db.Text
+  airingDate    DateTime @map("airing_date") @db.Date
+  episodeNumber Int      @map("episode_number")
+  serie         Serie    @relation(references: [id], fields: [serieId])
+  runtime_text  String
+  runtime       Int
+  wiki          String   @db.VarChar(255)
+  serieId       Int      @map("serie_id")
+  season        Season   @relation(fields: [seasonId], references: [id])
+  seasonId      Int
+}
