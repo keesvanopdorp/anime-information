@@ -1,4 +1,4 @@
-import { getSerie } from "@/app/api/anime/[id]/route";
+import { getSerie } from "@/app/api/anime/[id]/helper";
 import prisma from "@/libs/prisma";
 import { Prisma, Serie } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
@@ -23,10 +23,15 @@ async function getData(id: number) {
 }
 
 export default async function ShowSerieDetails({ params: { id } }: PageProps) {
-  const { title } = (await getData(parseInt(id.toString()))) as Serie;
-  return (
-    <div className="container px-2 py-3">
-      <h1 className="text-4xl">{title}</h1>
-    </div>
-  );
+  const serie = await getData(parseInt(id.toString()));
+
+  if (serie !== undefined) {
+    const { title } = serie;
+
+    return (
+      <div className="container px-2 py-3">
+        <h1 className="text-4xl">{title}</h1>
+      </div>
+    );
+  }
 }

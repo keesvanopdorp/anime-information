@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { getSeries } from './api/anime/route'
 import SerieCard from '@/components/SerieCard/SerieCard';
+import { getSeries } from './api/anime/helper';
 
 export default async function Home() {
   const series = await getSeries();
