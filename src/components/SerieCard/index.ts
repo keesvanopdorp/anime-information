@@ -1,1 +1,1 @@
-export {default as default} from "./SerieCard";
+export { default as default } from "./SerieCard";
