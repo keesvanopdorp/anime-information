@@ -1,29 +1,10 @@
-import prisma from "@/libs/prisma";
-import { Prisma, Serie } from "@prisma/client";
 import { NextResponse } from "next/server";
-
-const selectOptions: Prisma.SerieFindManyArgs = {
-    include: {
-        seasons: {
-            select: {
-                season: true,
-                name: true,
-                episodes: true,
-            },
-        },
-        alternativeTitles: {
-            select: {
-                lang: true,
-                title: true,
-            }
-        }
-    }
-}
-
-export async function getSeries(): Promise<Serie[]> {
-    return await prisma.serie.findMany(selectOptions);
-}
+import { getSeries } from "./helper";
 
 export async function GET() {
-    return NextResponse.json(await getSeries());
+	try {
+		return NextResponse.json(await getSeries());
+	} catch (e) {
+		return NextResponse.json({ message: "A unkown server error has occurred", status: 500 }, { status: 500 });
+	}
 }
