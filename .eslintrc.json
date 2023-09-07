@@ -1,8 +1,48 @@
 {
-  "plugins": ["prettier"],
-  "extends": "next/core-web-vitals",
+  "parserOptions": {
+    "ecmaVersion": 2023,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".ts",
+          ".tsx"
+        ]
+      }
+    }
+  },
+  "plugins": [
+    "prettier",
+    "sonarjs",
+    "@typescript-eslint",
+    "jsx-a11y",
+    "react-hooks"
+  ],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:sonarjs/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "root": true,
+  "parser": "@typescript-eslint/parser",
   "rules": {
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "error",
     "prettier/prettier": "error",
-    "object-curly-spacing": ["error", "always"]
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "arrow-parens": "off"
   }
 }

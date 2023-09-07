@@ -1,5 +1,5 @@
 import { getSerie } from "@/app/api/anime/[id]/helper";
-import { Prisma } from "@prisma/client";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { notFound } from "next/navigation";
 
 interface PageProps {
@@ -12,10 +12,8 @@ async function getData(id: number) {
 	try {
 		return await getSerie(id);
 	} catch (e) {
-		if (e instanceof Prisma.PrismaClientKnownRequestError) {
-			if (e.code === "P2025") {
-				notFound();
-			}
+		if (e instanceof PrismaClientKnownRequestError && e.code === "P2025") {
+			notFound();
 		}
 	}
 }
