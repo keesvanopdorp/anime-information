@@ -15,4 +15,4 @@ jobs:
       - name: installing eslint
         run: npm i 
       - name: Fixing Files
-        run: eslint . --ext .js,.jsx,.ts,.tsx
+        run: npm run lint
