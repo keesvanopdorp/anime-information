@@ -5,7 +5,7 @@ interface Props {
 }
 
 export default function SerieCard({ serie }: Props) {
-	const { title, description, startDate, endDate } = serie;
+	const { title, description, startDate, endDate, status } = serie;
 	return (
 		<div className="drop-shadow-xl bg-white p-[10px] rounded-xl flex flex-col w-6/6 md:w-5/6 mx-auto">
 			<h3 className="text-lg text-black">
@@ -24,8 +24,7 @@ export default function SerieCard({ serie }: Props) {
 				blurDataURL={"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP0dvKuBwADEQFZ9IFvHwAAAABJRU5ErkJggg=="}
 			/>
 			<p className="sm:text-sm md:text-base max-w-full">
-				Period: {startDate.toLocaleDateString()} to
-				{endDate !== null ? endDate.toDateString() : "now"}
+				Duration: {startDate.toLocaleDateString()} to {endDate !== null ? endDate.toLocaleDateString() : status}
 			</p>
 			<button className="bg-blue-500 text-white px-[15px] py-[8px] mt-[8px] rounded-md md:w-3/6 w-6/6 self-end">Go to serie</button>
 		</div>
